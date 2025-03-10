@@ -1,3 +1,8 @@
+---
+import Navbar from "../components/Navbar.astro";
+import '../styles/global.css';
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
@@ -8,6 +13,8 @@
 		<title>Astro Basics</title>
 	</head>
 	<body>
+		<script src="/src/scripts/screenTear.js" is:inline defer></script>
+		<Navbar />
 		<slot />
 	</body>
 </html>

@@ -1,17 +1,146 @@
 ---
-const navItems = [
-    { name: "Home", href: "/"}
+const links = [
+    {
+        name: "HOME", href: "/"
+    },
+    {
+        name: "PORTFOLIO", href: "/portfolio"
+    },
+    {
+        name: "SERVICES", href: "/services"
+    },
+    {
+        name: "ABOUT", href: "/about"
+    },
+    {
+        name: "CONTACT", href: "/contact"
+    },
 ]
----
 
+const currentPath = Astro.url.pathname;
+let lineWidth = "0%";
+switch (currentPath) {
+    case "/":
+        lineWidth = "550px";
+        break;
+    case "/portfolio":
+        lineWidth = "52%";
+        break;
+    case "/services":
+        lineWidth = "50%";
+        break;
+    case "/about":
+        lineWidth = "50%";
+        break;
+    case "/contact":
+        lineWidth = "50%";
+        break;
+}
+let compLineWidth = "1300px";
+---
+<style>
+.links-container {
+    display: flex;
+    gap: 5.5rem;
+    padding: 1.5em 0;
+    flex-direction: row;
+    justify-content: center;
+    font-size: larger;
+    position: relative;
+}
+
+._links-container {
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    text-shadow: 0 0 10px rgba(201, 197, 255, 0.7);
+    color: #7050ff;
+    font-family: 'Arial', sans-serif;
+}
+
+a:hover {
+    color: #9a83ff;
+    text-shadow: 0 0 20px rgba(201, 197, 255, 1);
+}
+
+.lines-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align the lines to the left */
+    margin-top: -20px;
+    gap: var(--gap, 52px); /* Default gap, can be changed dynamically */
+    position: relative; /* This allows the vertical line to be positioned relative to the container */
+}
+
+.line {
+    width: var(--line-width, 300px); /* Default length, can be changed dynamically */
+    height: 2px;
+    background-color: #7050ff;
+    position: relative;
+}
+
+.left-vertical-line {
+    width: 2px;
+    height: 26px;
+    background-color: #7050ff;
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+}
+
+.right-vertical-line {
+    width: 2px;
+    height: 26px;
+    background-color: #7050ff;
+    position: absolute;
+    left: 0;
+    bottom: 100%;
+}
+
+.left-mini-line {
+    width: 8px;
+    height: 1px;
+    background-color: #7050ff;
+    position: relative;
+}
+
+.right-mini-line {
+    width: 8px;
+    height: 1px;
+    background-color: #7050ff;
+    position: absolute;
+    right: 0px;
+}
+</style>
 <header>
     <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <!-- <li><a href="/"></a></li>
-            <li><a href="/"></a></li>
-            <li><a href="/"></a></li> -->
-        </ul>
+        <div class="_links-container">
+            <div class="links-container">
+                {
+                    links.map((item) => (
+                        <a href={item.href}>
+                            <span>{item.name}</span>
+                        </a>
+                    ))
+                }
+            </div>
+            <div class="lines-container">
+                <div class="line" style=`--line-width: ${lineWidth};`>
+                    <div class="left-vertical-line">
+                        <div class="left-mini-line" />
+                    </div>
+                </div>
+                <div style="width: var(--gap, 30px);" />
+                <div class="line" style=`--line-width: ${compLineWidth};`>
+                    <div class="right-vertical-line">
+                        <div class="right-mini-line" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </nav>
 </header>
