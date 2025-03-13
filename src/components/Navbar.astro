@@ -17,32 +17,13 @@ const links = [
     },
 ]
 
-const currentPath = Astro.url.pathname;
-let lineWidth = "0%";
-switch (currentPath) {
-    case "/":
-        lineWidth = "550px";
-        break;
-    case "/portfolio":
-        lineWidth = "52%";
-        break;
-    case "/services":
-        lineWidth = "50%";
-        break;
-    case "/about":
-        lineWidth = "50%";
-        break;
-    case "/contact":
-        lineWidth = "50%";
-        break;
-}
-let compLineWidth = "1300px";
 ---
 <style>
 .links-container {
     display: flex;
     gap: 5.5rem;
-    padding: 1.5em 0;
+    padding-top: 1.5em;
+    padding-bottom: 0.25em;
     flex-direction: row;
     justify-content: center;
     font-size: larger;
@@ -69,54 +50,73 @@ a:hover {
 
 .lines-container {
     display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align the lines to the left */
-    margin-top: -20px;
-    gap: var(--gap, 52px); /* Default gap, can be changed dynamically */
-    position: relative; /* This allows the vertical line to be positioned relative to the container */
+    flex-direction: row;
 }
-
-.line {
-    width: var(--line-width, 300px); /* Default length, can be changed dynamically */
+.left-line {
+    width: var(--line-width, 300px);
     height: 2px;
     background-color: #7050ff;
+}
+
+.gap-line {
+    width: var(--line-width, 60px);
+    height: 2px;
+    background-color: #ffffff00;
+}
+
+.right-line {
+    width: var(--line-width, 300px);
+    height: 2px;
+    background-color: #7050ff;
+}
+
+.vertical-line {
+    width: 2px;
+    height: 22px;
+    background-color: #7050ff;
     position: relative;
+    bottom: 20px;
 }
 
-.left-vertical-line {
-    width: 2px;
-    height: 26px;
-    background-color: #7050ff;
-    position: absolute;
-    right: 0;
-    bottom: 100%;
-}
-
-.right-vertical-line {
-    width: 2px;
-    height: 26px;
-    background-color: #7050ff;
-    position: absolute;
-    left: 0;
-    bottom: 100%;
-}
-
-.left-mini-line {
+.mini-line {
     width: 8px;
     height: 1px;
     background-color: #7050ff;
     position: relative;
+    bottom: 20px;
 }
 
-.right-mini-line {
-    width: 8px;
-    height: 1px;
-    background-color: #7050ff;
-    position: absolute;
-    right: 0px;
-}
 </style>
 <header>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentPath = window.location.pathname;
+            const activeLink = document.querySelector(`a[href="${currentPath}"]`) as HTMLElement;
+            const leftLine = document.querySelector(".left-line") as HTMLElement;
+            const gapLine = document.querySelector(".gap-line") as HTMLElement;
+            const rightLine = document.querySelector(".right-line") as HTMLElement;
+            const linksContainer = document.querySelector("._links-container") as HTMLElement;
+
+            function updateLineWidth() {
+                if (!activeLink || !leftLine || !gapLine) return;
+
+                const linkOffset = activeLink.offsetLeft;
+
+                const leftNewWidth = linkOffset - 12;
+                const gapNewWidth = activeLink.offsetWidth + 5;
+                const rightNewWidth = linksContainer.offsetWidth - (leftNewWidth + gapNewWidth) - 19;
+
+                // Apply calculated widths
+                leftLine.style.setProperty("--line-width", `${leftNewWidth}px`);
+                gapLine.style.setProperty("--line-width", `${gapNewWidth}px`);
+                rightLine.style.setProperty("--line-width", `${rightNewWidth}px`);
+            }
+
+            // Run on load and window resize
+            updateLineWidth();
+            window.addEventListener("resize", updateLineWidth);
+        });
+    </script>
     <nav>
         <div class="_links-container">
             <div class="links-container">
@@ -129,17 +129,13 @@ a:hover {
                 }
             </div>
             <div class="lines-container">
-                <div class="line" style=`--line-width: ${lineWidth};`>
-                    <div class="left-vertical-line">
-                        <div class="left-mini-line" />
-                    </div>
-                </div>
-                <div style="width: var(--gap, 30px);" />
-                <div class="line" style=`--line-width: ${compLineWidth};`>
-                    <div class="right-vertical-line">
-                        <div class="right-mini-line" />
-                    </div>
-                </div>
+                <div class="left-line"></div>
+                <div class="vertical-line" />
+                <div class="mini-line" />
+                <div class="gap-line"></div>
+                <div class="mini-line" />
+                <div class="vertical-line" />
+                <div class="right-line"></div>
             </div>
         </div>
     </nav>

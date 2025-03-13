@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Project from '../components/Project.astro';
+import background from '../assets/background.svg';
+
+const projectDetails = {
+    0: {
+        projectName: "The Asdf LLM VSCode Extension",
+        projectLink: "https://github.com/lealj/theasdfllmext",
+        projectDescription: "This is the first project description.",
+        imageUrl: "https://via.placeholder.com/150"
+    },
+    1: {
+        projectName:"DownAndSync - Migrate YouTube Music to Plex Media Server",
+        projectLink:"https://github.com/username/project2",
+        projectDescription:"This is the second project description.",
+        imageUrl:"/exampleProjectImage.PNG"
+    }
+}
+---
+<style>
+    .portfolio-container {
+        display: flex;
+        width: 1200px;
+        flex-direction: column;
+        justify-self: center;
+    }
+</style>
+<Layout>
+    <h1 class="text-3xl font-bold text-center mb-8">My Portfolio</h1>
+
+    <div class="portfolio-container">
+        {
+            Object.values(projectDetails).map((project) => (
+                <Project 
+                projectName={project.projectName} 
+                projectLink={project.projectLink} 
+                projectDescription={project.projectDescription} 
+                imageUrl={project.imageUrl} 
+                />
+            ))
+        }
+    </div>
+</Layout>
