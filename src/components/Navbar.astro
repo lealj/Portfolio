@@ -49,6 +49,7 @@ a:hover {
 }
 
 .lines-container {
+    visibility: hidden;
     display: flex;
     flex-direction: row;
 }
@@ -110,6 +111,9 @@ a:hover {
                 leftLine.style.setProperty("--line-width", `${leftNewWidth}px`);
                 gapLine.style.setProperty("--line-width", `${gapNewWidth}px`);
                 rightLine.style.setProperty("--line-width", `${rightNewWidth}px`);
+
+                const linesContainer = document.querySelector(".lines-container") as HTMLElement;
+                linesContainer.style.visibility = "visible";
             }
 
             // Run on load and window resize

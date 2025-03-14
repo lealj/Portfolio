@@ -10,6 +10,7 @@ function addScreenTear() {
     tear.style.background = "linear-gradient(180deg, transparent 0%, rgba(75, 75, 75, 0.29) 80%, rgba(75, 75, 75, 0.34) 92%, transparent 100%)";
 
     tear.style.animation = "screenTear 3.5s linear";
+    tear.style.pointerEvents = "none";
 
     document.body.appendChild(tear);
 
