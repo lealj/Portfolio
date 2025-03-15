@@ -2,21 +2,50 @@
 import Layout from '../layouts/Layout.astro';
 import Project from '../components/Project.astro';
 import background from '../assets/background.svg';
+import Button from '../components/Button.astro';
 
-const projectDetails = {
-    0: {
-        projectName: "The Asdf LLM VSCode Extension",
+const projectDetails = [
+    {
+        projectName: "ChatGPT VSCode Extension",
         projectLink: "https://github.com/lealj/theasdfllmext",
-        projectDescription: "This is the first project description.",
-        imageUrl: "https://via.placeholder.com/150"
+        projectDescription: `Developed Python desktop app facilitating music migration from Youtube liked-videos to Plex Media Server.
+            Used threads to download videos and monitor for new liked videos, regularly syncing liked-videos on Youtube with
+            personal music directory.
+            Used SQLite to store user music data.
+            Setup Github Actions (CI) to build artifact on merges with master branch (CD setup in progress).`,
+        imageUrl: "/exampleProjectImage.PNG"
     },
-    1: {
-        projectName:"DownAndSync - Migrate YouTube Music to Plex Media Server",
-        projectLink:"https://github.com/username/project2",
-        projectDescription:"This is the second project description.",
-        imageUrl:"/exampleProjectImage.PNG"
+    {
+        projectName: "DownAndSync - YouTube Music to Plex Media Server",
+        projectLink: "https://github.com/username/project2",
+        projectDescription: "This is the second project description.",
+        imageUrl: "/exampleProjectImage.PNG"
+    },
+    {
+        projectName: "Portfolio",
+        projectLink: "https://github.com/username/project2",
+        projectDescription: "This is the second project description.",
+        imageUrl: "/exampleProjectImage.PNG"
+    },
+    {
+        projectName: "Frank & Son Towing",
+        projectLink: "https://github.com/username/project2",
+        projectDescription: "This is the second project description.",
+        imageUrl: "/exampleProjectImage.PNG"
+    },
+    {
+        projectName: "Stock Mocket",
+        projectLink: "https://github.com/username/project2",
+        projectDescription: "This is the second project description.",
+        imageUrl: "/exampleProjectImage.PNG"
+    },
+    {
+        projectName: "CNT Project",
+        projectLink: "https://github.com/username/project2",
+        projectDescription: "This is the second project description.",
+        imageUrl: "/exampleProjectImage.PNG"
     }
-}
+];
 ---
 <style>
     .portfolio-container {
@@ -25,20 +54,84 @@ const projectDetails = {
         flex-direction: column;
         justify-self: center;
     }
+
+    .main-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .left-container {
+        padding-left: 9em;
+        flex: 1;
+    }
+    .right-container {
+        flex: 1;
+        padding-right: 9em;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Will move to other file*/
+    .project-image-container {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        display: flex;
+    }
+
+    .project-image {
+        object-fit: cover;
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .box-title-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        
+    }
 </style>
 <Layout>
-    <h1 class="text-3xl font-bold text-center mb-8">My Portfolio</h1>
+    <div class="main-container">
+        <div class="left-container">
+            <h1 class="text-3xl font-bold text-center mb-8">My Portfolio</h1>
+            <main>
+                <table>
+                    <tbody>
+                        {projectDetails.map((proj, index) => (
+                            <tr>
+                                <td class="box-title-container">
+                                    <Button projectName={proj.projectName} />
+                                </td>
+                            </tr>
+                        ))}
+                        <script>
+                            const buttons = document.querySelectorAll('.title-button');
+                            console.log(buttons);
+                            buttons.forEach((button) => {
+                                button.addEventListener('click', () => {
+                                    buttons.forEach(btn => btn.classList.remove('selected'));
 
-    <div class="portfolio-container">
-        {
-            Object.values(projectDetails).map((project) => (
-                <Project 
-                projectName={project.projectName} 
-                projectLink={project.projectLink} 
-                projectDescription={project.projectDescription} 
-                imageUrl={project.imageUrl} 
-                />
-            ))
-        }
+                                    button.classList.add('selected');
+                                });
+                            });
+                        </script>
+                    </tbody>
+                </table>
+            </main>
+        </div>
+        <div class="right-container">
+            <div class="image-title-container">
+                <h3 class="project-name">{projectDetails[0].projectName}</h3>
+        
+                <div class="project-image-container" >
+                    <img src={projectDetails[0].imageUrl} alt={projectDetails[0].projectName} class="project-image" />
+                </div>
+            </div>
+        
+            <a href={projectDetails[0].projectLink} class="project-link">View Github</a>
+            <p class="project-desc">{projectDetails[0].projectDescription}</p>
+        </div>
     </div>
 </Layout>
