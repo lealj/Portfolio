@@ -1,18 +1,19 @@
 ---
 export interface Props {
     projectName: string;
+    index: number;
 }
-const { projectName } = Astro.props;
+const { projectName, index } = Astro.props;
 ---
 
-<button class="title-button">{projectName}</button>
+<button class="title-button" data-index={index}>{projectName}</button>
 
 <style>
     .title-button {
         position: relative;
         width: 30em;
-        height: 5em;
-        font-size: larger;
+        height: 3em;
+        font-size: x-large;
         color: #7050ff;
         background-color: transparent;
         border: none;
@@ -29,8 +30,8 @@ const { projectName } = Astro.props;
     /* The box to the left of button content*/
     .title-button::before {
         content: "";
-        width: 0.8em;
-        height: 0.8em;
+        width: 0.5em;
+        height: 0.5em;
         border: 2px solid #7050ff;
         background-color: transparent;
         display: inline-block;
